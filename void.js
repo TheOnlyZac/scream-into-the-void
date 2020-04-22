@@ -8,14 +8,15 @@ $(document).ready(function() {
     document.addEventListener('keydown', function(e) {
         var keycode = e.keyCode;
 
+        // set fade delay to 2s
+        countdown = 1000;
+
         // handle backspace
         if (keycode === 8) voidText.removeChild(voidText.lastChild);
+        else if (keycode === 13) voidText.appendChild(document.createTextNode('\n'));
         
         // can't print
         if (e.key.length != 1  || animating) return;
-
-        // set fade delay to 2s
-        countdown = 1000;
 
         // create container for new letter
         let span = document.createElement('span'),
@@ -44,22 +45,23 @@ $(document).ready(function() {
 })
 
 function fadeVoidText() {
-    console.log('fading');
     var spans = Array.from(document.getElementById('void').children),
-    d = jQuery.Deferred();
+    fadeTime;
+
+    if (spans.length <= 20) time = spans.length * 100;
+    else time = 2000;
 
     for (let i = 0; i < spans.length; i++) {
         animating = true;
         setTimeout(function() {
             $(spans[i]).animate({opacity: 0}, 1000);
-        }, i * 100);
+        }, i * (time/spans.length));
 
         if (i === spans.length-1) {
             setTimeout(function() {
-                console.log('finishing');
                 $('#void').empty();
                 animating = false;
-            }, i * 100 + 1000);
+            }, i * (time/spans.length) + 1000);
         }
     }
 }
