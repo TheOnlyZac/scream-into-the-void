@@ -19,14 +19,17 @@ body {
 
 #container {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
 
     height: 100%;
 }
 
-#void {
+p {
+    display: inline-block;
+    margin: 0;
+
     max-width: 100%;
     word-wrap: break-word;
 
@@ -38,4 +41,8 @@ body {
     line-height: 1em;
 
     user-select: none;
+}
+
+.hidden {
+    opacity: 0 !important;
 }
