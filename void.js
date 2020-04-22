@@ -5,7 +5,7 @@ voidText;
 $(document).ready(function() {
     voidText = document.getElementById('void');
 
-    //voidType('scream into the void'); //todo
+    voidType('scream into the void');
 
     document.addEventListener('keydown', function(e) {
         var keycode = e.keyCode;
@@ -51,6 +51,15 @@ function putChar(char) {
     
     // append new span to void text element
     voidText.appendChild(span);
+}
+
+function voidType(text) {
+    var charSplit = Array.from(text);
+    for (let i = 0; i < charSplit.length; i++) {
+        setTimeout(function() {
+            putChar(charSplit[i]);
+        }, i * 100);
+    }
 }
 
 function fadeVoidText() {
