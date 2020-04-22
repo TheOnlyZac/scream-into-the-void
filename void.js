@@ -1,15 +1,14 @@
 var animating = false,
-counter;
+countdown = 1000,
+voidText;
 
 $(document).ready(function() {
-    var voidText = document.getElementById('void'),
-    countdown = 0;
+    voidText = document.getElementById('void');
+
+    //voidType('scream into the void'); //todo
 
     document.addEventListener('keydown', function(e) {
         var keycode = e.keyCode;
-
-        // set fade delay to 2s
-        countdown = 1000;
 
         // handle backspace
         if (keycode === 8) voidText.removeChild(voidText.lastChild);
@@ -23,19 +22,8 @@ $(document).ready(function() {
         // can't print, invalid character or currently animating
         if (e.key.length != 1  || animating) return;
 
-        // create span container for new letter
-        let span = document.createElement('span'),
-        char = e.key;
-
-        // append container to void text
-        span.appendChild(document.createTextNode(char));
-        
-        /* setInterval(function() {
-            $(span).fadeOut();
-        }, 1000); */
-
-        voidText.appendChild(span);
-    })
+        putChar(e.key);
+    });
 
     // every 100ms, decrease the timer by 100ms and check if 0
     setInterval(function() {
@@ -48,7 +36,22 @@ $(document).ready(function() {
             fadeVoidText();
         }
     }, 100);
+
 })
+
+function putChar(char) {
+    // reset the countdown to 1 sec
+    countdown = 1000;
+
+    // create span container for new letter
+    let span = document.createElement('span');
+
+    // append char to new span
+    span.appendChild(document.createTextNode(char));
+    
+    // append new span to void text element
+    voidText.appendChild(span);
+}
 
 function fadeVoidText() {
     // fade out the voidtext 1 char at a time
