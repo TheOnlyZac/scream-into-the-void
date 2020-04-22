@@ -57,8 +57,8 @@ $(document).ready(function() {
 
 function putChar(char) {
     // reset the countdown to 1 sec
-    countdown = 1000;
-    
+    countdown = 2000;
+
     // create span container for new letter
     let span = document.createElement('span');
     $(span).addClass('voidChar');
@@ -110,8 +110,8 @@ function fadeVoidText() {
     fadeTime;
 
     // set fadeout time to num of chars * 100ms, with a max of 2000ms (2s)
-    if (spans.length <= 20) time = spans.length * 100;
-    else time = 2000;
+    if (spans.length <= 30) time = spans.length * 100;
+    else time = 3000;
 
     // set animating to true to disallow user input
     animating = true;
