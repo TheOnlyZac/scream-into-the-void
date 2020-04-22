@@ -26,7 +26,11 @@ body {
     height: 100%;
 }
 
-.void {
+#void {
+    max-width: 100%;
+    word-wrap: break-word;
+
+    text-align: center;
     font-family: "Bilo", "Calibri", Arial, sans-serif;
     font-weight: bold;
     font-size: 8em;
