@@ -13,7 +13,12 @@ $(document).ready(function() {
 
         // handle backspace
         if (keycode === 8) voidText.removeChild(voidText.lastChild);
-        else if (keycode === 13) voidText.appendChild(document.createTextNode('\n'));
+
+        // handle return
+        if (keycode === 13) {
+            contdown = 0;
+            fadeVoidText();
+        }
         
         // can't print, invalid character or currently animating
         if (e.key.length != 1  || animating) return;

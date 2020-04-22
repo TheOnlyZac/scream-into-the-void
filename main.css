@@ -34,4 +34,8 @@ body {
     font-family: "Bilo", "Calibri", Arial, sans-serif;
     font-weight: bold;
     font-size: 8em;
+
+    line-height: 1em;
+
+    user-select: none;
 }
