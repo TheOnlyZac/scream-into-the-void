@@ -1,13 +1,10 @@
 var animating = false,
 countdown = 1000,
-cursorVisible = true,
-voidText, cursor,
-cursorInterval;
+voidInput, voidText;
 
 $(document).ready(function() {
-    console.log('dom init');
-    voidText = document.getElementById('void');
-    cursor = document.getElementById('cursor');
+    voidInput = document.getElementById('voidInput');
+    voidText = document.getElementById('voidText');
 
     // display default message
     voidType('scream into the void');
@@ -20,45 +17,33 @@ $(document).ready(function() {
         if (animating) return;
 
         // reset the countdown to 1 sec
-        countdown = 1000;
-
-        // handle backspace key
-        if (keycode === 8) {
-            $('#cursor').prev().remove();
-        }
+        countdown = 2000;
 
         // handle return key
         if (keycode === 13) {
+            e.preventDefault();
             contdown = 0;
             fadeVoidText();
         }
         
-        // unprintable character
-        if (e.key.length != 1) return;
-
-        // all good, print the char
-        putChar(e.key);
     });
 
     // every 100ms, decrease the timer by 100ms and check if 0
     var countdownInterval = setInterval(function() {
         countdown -= 100;
         if (countdown < 0) countdown = 0;
-
+        $(voidInput).focus();
+        
         // if the counter is 0 and not already animating, fadeout the void text
-        if (countdown === 0 && voidText.children.length > 1 && !animating) {
+        if (countdown === 0 && voidInput.innerHTML.length > 0 && !animating) {
             countdown = 0;
             fadeVoidText();
         }
     }, 100);
 
-    cursorInterval = setInterval(blinkCursor, 1000);
 });
 
 function putChar(char) {
-    // reset the countdown to 1 sec
-    countdown = 2000;
-
     // create span container for new letter
     let span = document.createElement('span');
     $(span).addClass('voidChar');
@@ -67,47 +52,36 @@ function putChar(char) {
     span.appendChild(document.createTextNode(char));
     
     // append new span to void text element
-    cursor.before(span);
-}
-
-function putCursor() {
-    console.log('putting cursor');
-    if (cursor) return;
-
-    cursor = document.createElement('span');
-    cursor.appendChild(document.createTextNode('|'));
-    $(cursor).setAttr('id', 'cursor');
-    voidText.appendChild(cursor);
-}
-
-function blinkCursor() {
-    if (!cursor) { putCursor(); }
-    else if (cursorVisible) {
-        cursor.style.opacity = 0;
-        cursorVisible = false;
-    } else {
-        cursor.style.opacity = 1;
-        cursorVisible = true;
-    }
+    voidText.appendChild(span);
 }
 
 function voidType(text) {
     var charSplit = Array.from(text);
     for (let i = 0; i < charSplit.length; i++) {
         setTimeout(function() {
-            putChar(charSplit[i]);
+            countdown = 1000;
+            voidInput.appendChild(document.createTextNode(charSplit[i]));
         }, i * 100);
     }
 }
 
 function fadeVoidText() {
-    console.log('fading');
-    // hide the cursor
-    $(cursor).addClass('hidden');
+    // enable animating flag and disallow input
+    animating = true;
 
     // fade out the voidtext 1 char at a time
-    var spans = Array.from(document.getElementsByClassName('voidChar')),
+    var chars = Array.from(document.getElementById('voidInput').innerHTML),
     fadeTime;
+
+    chars.forEach(c => {
+        putChar(c);
+    });
+
+    var spans = Array.from(document.getElementById('voidText').children);
+
+    $(voidInput).hide();
+    $(voidText).show();
+    voidInput.innerHTML = '';
 
     // set fadeout time to num of chars * 100ms, with a max of 2000ms (2s)
     if (spans.length <= 30) time = spans.length * 100;
@@ -127,11 +101,10 @@ function fadeVoidText() {
     }
 
     setTimeout(function() {
-        console.log('finishing');
         $('.voidChar').remove();
         animating = false;
-        clearInterval(cursorInterval);
-        cursorInterval = setInterval(blinkCursor, 1000);
-        $(cursor).removeClass('hidden');
+
+        $(voidText).hide();
+        $(voidInput).show();
     }, spans.length * (time/spans.length) + 1000);
 }
