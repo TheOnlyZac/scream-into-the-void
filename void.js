@@ -69,11 +69,9 @@ function fadeVoidText() {
     animating = true;
 
     // fade out the voidtext 1 char at a time
-    console.log(voidInput.innerHTML);
     var chars = Array.from(voidInput.innerHTML.replace(/&nbsp;/g,' ')),
     fadeTime;
 
-    console.log(chars);
     chars.forEach(c => {
         putChar(c);
     });
