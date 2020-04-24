@@ -14,6 +14,7 @@ body {
     color: white;
     background-color: black;
 
+    font-family: "Bilo", "Calibri", Arial, sans-serif;
     font-size: 14px;
 
     overflow: hidden;
@@ -38,7 +39,6 @@ body {
     word-break: break-word !important;
 
     text-align: center;
-    font-family: "Bilo", "Calibri", Arial, sans-serif;
     font-weight: bold;
     font-size: 8em;
 
@@ -60,4 +60,27 @@ body {
 
 .hidden {
     opacity: 0 !important;
+}
+
+#footer {
+    position: absolute;
+    bottom: 10px;
+
+    width: 100%;
+
+    color: #444;
+    font-size: 1em;
+    text-align: center;
+}
+
+@media only screen and (max-width: 800px) {
+    #footer {
+        bottom: 20px;
+        font-size: 1em;
+    }
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
 }
