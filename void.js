@@ -11,7 +11,6 @@ $(document).ready(function() {
 
     document.addEventListener('keydown', function(e) {
         var keycode = e.keyCode;
-        console.log(keycode);
 
         // ignore if animation in progress
         if (animating) return;
@@ -70,9 +69,11 @@ function fadeVoidText() {
     animating = true;
 
     // fade out the voidtext 1 char at a time
-    var chars = Array.from(document.getElementById('voidInput').innerHTML),
+    console.log(voidInput.innerHTML);
+    var chars = Array.from(voidInput.innerHTML.replace(/&nbsp;/g,' ')),
     fadeTime;
 
+    console.log(chars);
     chars.forEach(c => {
         putChar(c);
     });
