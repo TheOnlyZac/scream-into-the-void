@@ -31,7 +31,6 @@ $(document).ready(function() {
     var countdownInterval = setInterval(function() {
         countdown -= 100;
         if (countdown < 0) countdown = 0;
-        $(voidInput).focus();
         
         // if the counter is 0 and not already animating, fadeout the void text
         if (countdown === 0 && voidInput.innerHTML.length > 0 && !animating) {
@@ -39,6 +38,10 @@ $(document).ready(function() {
             fadeVoidText();
         }
     }, 100);
+
+    $('body').click(function() {
+        $(voidInput).focus();
+    })
 
 });
 

@@ -21,11 +21,49 @@
 
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
     <script src="void.js"></script>
+    <script src="transitions.js"></script>
 </head>
 <body>
     <div id="container">
         <p class="void" id="voidInput" contenteditable="true"></p>
         <p class="void" id="voidText"></p>
-        <nav id="footer"><a href="http://zac.boston">© theonlyzac</a> | about | options</nav> 
+
+        <div class="popup about-popup" style="display:none">
+            <span class="btn close-btn">x</span>
+            <h1>Scream into the Void</h1>
+            <h2>by Zac Krasnow</h2>
+            <p>
+                Sometimes you just need to get something out of your system. 
+                This app is designed to simulate the experience of screaming 
+                into a pillow.
+            </p>
+            <p>
+                Type anything and watch it disappear into the void. Write your 
+                hopes, fears, dreams, thoughts, or just mash random keys. 
+                Nothing you write is ever saved or seen by anyone else. 
+            </p>
+            <p>
+                To see more apps I've created, visit
+                <a href="https://zacbox.app">https://zacbox.app</a>.
+            </p>
+            <p>
+                To see my web development portfolio or contact me, visit 
+                <a href="http://zac.boston">http://zac.boston</a>.
+            </p>
+        </div>
+
+        <div class="popup options-popup" style="display:none">
+            <span class="btn close-btn">x</span>
+            <h1>Options</h1>
+            <label for="invert-opt">Invert Colors</label> <input type="checkbox" id="invert-opt">
+            </br>
+            <label for="autofade-opt">Auto Fade</label> <input type="checkbox" id="autofade-opt">
+            </br>
+            <label for="timer-opt">Auto Fade Timer</label> <input type="number" id="timer-opt">
+        </div>
+
+        <nav id="footer">© <a href="http://zac.boston">theonlyzac</a> |
+            <span class="btn about-btn">about</span> |
+            <span class="btn options-btn">options</span></nav> 
     </div>
 </body>
