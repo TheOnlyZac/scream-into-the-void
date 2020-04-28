@@ -1,5 +1,7 @@
 var animating = false,
 countdown = 1000,
+isAutofadeEnabled = true,
+autofadeTimer = 2000,
 voidInput, voidText;
 
 $(document).ready(function() {
@@ -9,16 +11,17 @@ $(document).ready(function() {
     // display default message
     voidType('scream into the void');
 
+    // handle special keypress cases
     document.addEventListener('keydown', function(e) {
         var keycode = e.keyCode;
 
-        // ignore if animation in progress
-        if (animating) return;
+        // ignore keypress if animation in progress or popup open
+        if (animating || currPopup != 'none') return;
 
-        // reset the countdown to 1 sec
-        countdown = 2000;
+        // reset the autofade timer
+        countdown = autofadeTimer;
 
-        // handle return key
+        // fade now if return key pressed
         if (keycode === 13) {
             e.preventDefault();
             contdown = 0;
@@ -27,10 +30,14 @@ $(document).ready(function() {
         
     });
 
-    // every 100ms, decrease the timer by 100ms and check if 0
+    // every 100ms, decrease the timer by 100ms and check if it's 0
     var countdownInterval = setInterval(function() {
         countdown -= 100;
         if (countdown < 0) countdown = 0;
+
+        if (currPopup === 'none') {
+            $(voidInput).focus();
+        }
         
         // if the counter is 0 and not already animating, fadeout the void text
         if (countdown === 0 && voidInput.innerHTML.length > 0 && !animating) {
@@ -38,11 +45,6 @@ $(document).ready(function() {
             fadeVoidText();
         }
     }, 100);
-
-    $('body').click(function() {
-        $(voidInput).focus();
-    })
-
 });
 
 function putChar(char) {

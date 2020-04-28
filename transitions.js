@@ -9,6 +9,7 @@ $(document).ready(function() {
 		}
 		closePopups();
 		$('.about-popup').fadeIn();
+		blur();
 		currPopup = 'about';
 	});
 
@@ -19,6 +20,7 @@ $(document).ready(function() {
 		}
 		closePopups();
 		$('.options-popup').fadeIn();
+		blur();
 		currPopup = 'options';
 	});
 
