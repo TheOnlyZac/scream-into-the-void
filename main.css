@@ -17,8 +17,7 @@ body {
     font-family: "Bilo", "Calibri", Arial, sans-serif;
     font-size: 14px;
 
-    overflow-x: hidden; 
-    overflow-y: scroll;
+    overflow: hidden;
 }
 
 .inverted {
@@ -39,12 +38,15 @@ a {
     align-items: center;
     justify-content: center;
 
+    margin: 5px;
+    
     height: 100%;
 }
 
 .void {
     display: block;
     margin: 0;
+    padding: 0;
 
     min-height: 1em;
 
@@ -55,13 +57,17 @@ a {
     font-weight: bold;
     font-size: 6em;
 
-    line-height: 1em;
+    line-height: 0.8em;
 
     color: white;
     background: black;
     /* border: 1px solid white; */
 
+    overflow-y: hidden;
+    overflow-y: hidden;
     user-select: none;
+
+    box-sizing: content-box;
 }
 
 [contenteditable] {
