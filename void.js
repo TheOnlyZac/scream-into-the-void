@@ -1,5 +1,5 @@
 var animating = false,
-countdown = 1000,
+fadeoutDelay = 1000,
 isAutofadeEnabled = true,
 autofadeTimer = 2000,
 voidInput, voidText;
@@ -9,7 +9,7 @@ $(document).ready(function() {
     voidText = document.getElementById('voidText');
 
     // display default message
-    voidType('scream into the void');
+    typeIn('scream into the void');
 
     // handle special keypress cases
     document.addEventListener('keydown', function(e) {
@@ -19,7 +19,7 @@ $(document).ready(function() {
         if (animating || currPopup != 'none') return;
 
         // reset the autofade timer
-        countdown = autofadeTimer;
+        fadeoutDelay = autofadeTimer;
 
         // fade now if return key pressed
         if (keycode === 13) {
@@ -32,16 +32,16 @@ $(document).ready(function() {
 
     // every 100ms, decrease the timer by 100ms and check if it's 0
     var countdownInterval = setInterval(function() {
-        countdown -= 100;
-        if (countdown < 0) countdown = 0;
+        fadeoutDelay -= 100;
+        if (fadeoutDelay < 0) fadeoutDelay = 0;
 
         if (currPopup === 'none') {
             $(voidInput).focus();
         }
         
         // if the counter is 0 and not already animating, fadeout the void text
-        if (countdown === 0 && voidInput.innerHTML.length > 0 && !animating) {
-            countdown = 0;
+        if (fadeoutDelay === 0 && voidInput.innerHTML.length > 0 && !animating) {
+            fadeoutDelay = 0;
             fadeVoidText();
         }
     }, 100);
@@ -59,12 +59,21 @@ function putChar(char) {
     voidText.appendChild(span);
 }
 
-function voidType(text) {
+function typeIn(text) {
     var charSplit = Array.from(text);
     for (let i = 0; i < charSplit.length; i++) {
         setTimeout(function() {
-            countdown = 1000;
+            // Add the next character to the input
+            fadeoutDelay = 1000;
             voidInput.appendChild(document.createTextNode(charSplit[i]));
+
+            // Set the caret to the end of the input
+            var selection = window.getSelection();
+            var range = document.createRange();
+            range.selectNodeContents(voidInput);
+            range.collapse(false);
+            selection.removeAllRanges();
+            selection.addRange(range);
         }, i * 100);
     }
 }
