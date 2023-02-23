@@ -1,8 +1,8 @@
-var animating = false,
-fadeoutDelay = 1000,
-isAutofadeEnabled = true,
-autofadeTimer = 2000,
-voidInput, voidText;
+var animating = false;
+var fadeoutDelay = 1000;
+var isAutofadeEnabled = true;
+var autofadeTimer = 2000;
+var voidInput, voidText;
 
 $(document).ready(function() {
     voidInput = document.getElementById('voidInput');
