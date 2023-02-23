@@ -35,18 +35,18 @@
 
     <!-- js -->
     <script src="https://code.jquery.com/jquery-3.5.0.min.js"></script>
-    <script src="void.js"></script>
+    <script type="module" src="void.js"></script>
     <script src="transitions.js"></script>
 </head>
 
 <body>
     <div id="container">
-        <p id="voidInput" class="void" contenteditable="true" spellcheck="false"></p>
+        <p id="voidInput" class="void" contenteditable="true" spellcheck="false" alt="void text input" tabindex="0"></p>
         <p id="voidText" class="void"></p>
 
         <div class="popup about-popup" style="display:none">
-            <span class="btn close-btn">x</span>
-            <h1>Scream into the Void</h1>
+            <span class="btn close-btn about-close-btn" role="button" tab-index="0">x</span>
+            <h1 id="about-title">Scream into the Void</h1>
             <h2>by theonlyzac</h2>
             <p>
                 Sometimes you just need to clear your head. This app is designed to
@@ -67,20 +67,43 @@
         </div>
 
         <div class="popup options-popup" style="display:none">
-            <span class="btn close-btn">x</span>
-            <h1>Options</h1>
-            <h2>Coming soon.</h2>
-            <!--<label for="invert-opt">Invert Colors</label> <input type="checkbox" id="invert-opt">
-                </br>
-                <label for="autofade-opt">Auto Fade</label> <input type="checkbox" id="autofade-opt">
-                </br>
-                <label for="timer-opt">Auto Fade Timer</label> <input type="number" id="timer-opt">-->
+            <span class="btn close-btn options-close-btn">x</span>
+            <h1 id="options-title">Options</h1>
+            <label for="opt-invert">Invert Colors</label> <input type="checkbox" id="opt-invert" class="option">
+            </br>
+            <label for="opt-autofade">Autofade</label> <input type="checkbox" id="opt-autofade" class="option">
+            </br>
+            <label for="opt-autofadeTime">Autofade delay (secs)</label> <input type="number" id="opt-autofadeTime" class="option">
         </div>
 
-        <nav id="footer">© <a href="http://zac.boston">theonlyzac</a> |
-            <span class="btn about-btn">help</span> |
-            <span class="btn options-btn">options</span>
+        <nav id="footer">© <a href="http://zac.boston" tabindex="0">theonlyzac</a> |
+            <a class="btn about-btn" role="button" tabindex="0">about</a> |
+            <a class="btn options-btn" role="button" tabindex="0">options</a>
         </nav>
+
+        <!-- script to make help and options accessible for keyboard navigation -->
+        <script>
+            // Get the help and options buttons
+            const helpButton = document.querySelector('.about-btn');
+            const optionsButton = document.querySelector('.options-btn');
+          
+            // Add a keydown event listener to each button
+            helpButton.addEventListener('keydown', function(event) {
+              // Check if the Enter key was pressed
+              if (event.key === 'Enter' || event.key === 'Space') {
+                // Call the onclick handler
+                helpButton.click();
+              }
+            });
+          
+            optionsButton.addEventListener('keydown', function(event) {
+              // Check if the Enter key was pressed
+              if (event.key === 'Enter' || event.key === 'Space') {
+                // Call the onclick handler
+                optionsButton.click();
+              }
+            });
+          </script>
     </div>
 </body>
 

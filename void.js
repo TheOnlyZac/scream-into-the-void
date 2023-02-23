@@ -1,10 +1,14 @@
+'use strict'
+import { Options } from './options.js';
+
 var animating = false;
-var fadeoutDelay = 1000;
-var isAutofadeEnabled = true;
-var autofadeTimer = 2000;
+var textFadeDelay = 1000;
 var voidInput, voidText;
 
 $(document).ready(function() {
+    let options = new Options();
+    console.log(options.getOptions());
+
     voidInput = document.getElementById('voidInput');
     voidText = document.getElementById('voidText');
 
@@ -13,18 +17,17 @@ $(document).ready(function() {
 
     // handle special keypress cases
     document.addEventListener('keydown', function(e) {
-        var keycode = e.keyCode;
+        var key = e.key;
 
         // ignore keypress if animation in progress or popup open
         if (animating || currPopup != 'none') return;
 
         // reset the autofade timer
-        fadeoutDelay = autofadeTimer;
+        textFadeDelay = options.getOption('autofadeTime') * 1000;
 
         // fade now if return key pressed
-        if (keycode === 13) {
+        if (key === 'Enter') {
             e.preventDefault();
-            contdown = 0;
             fadeVoidText();
         }
         
@@ -32,16 +35,19 @@ $(document).ready(function() {
 
     // every 100ms, decrease the timer by 100ms and check if it's 0
     var countdownInterval = setInterval(function() {
-        fadeoutDelay -= 100;
-        if (fadeoutDelay < 0) fadeoutDelay = 0;
-
-        if (currPopup === 'none') {
-            $(voidInput).focus();
+        // if autofade is disabled, reset the timer and return
+        if (!options.getOption('autofade')) {
+            textFadeDelay = options.getOption('autofadeTime') * 1000;
+            return;
         }
         
+        // decrease the timer by 100ms
+        textFadeDelay -= 100;
+        if (textFadeDelay < 0) textFadeDelay = 0;
+        
         // if the counter is 0 and not already animating, fadeout the void text
-        if (fadeoutDelay === 0 && voidInput.innerHTML.length > 0 && !animating) {
-            fadeoutDelay = 0;
+        if (textFadeDelay === 0 && voidInput.innerHTML.length > 0 && !animating) {
+            textFadeDelay = 0;
             fadeVoidText();
         }
     }, 100);
@@ -64,7 +70,7 @@ function typeIn(text) {
     for (let i = 0; i < charSplit.length; i++) {
         setTimeout(function() {
             // Add the next character to the input
-            fadeoutDelay = 1000;
+            textFadeDelay = 1000;
             voidInput.appendChild(document.createTextNode(charSplit[i]));
 
             // Set the caret to the end of the input
@@ -97,6 +103,7 @@ function fadeVoidText() {
     voidInput.innerHTML = '';
 
     // set fadeout time to num of chars * 100ms, with a max of 2000ms (2s)
+    let time = 0;
     if (spans.length <= 30) time = spans.length * 100;
     else time = 3000;
 
@@ -110,14 +117,21 @@ function fadeVoidText() {
             $(spans[i]).animate({opacity: 0}, 1000);
         }, i * (time/spans.length));
 
-        // if this is the last character, clear the void text and set animation false
     }
-
+    
+    // set timeout to clear the void text after the last character has faded out
     setTimeout(function() {
+        // clear the void text
         $('.voidChar').remove();
         animating = false;
 
+        // show the void input and focus on it
         $(voidText).hide();
         $(voidInput).show();
+        
+        // if there is no popup open, focus on the void input
+        if (currPopup === 'none') {
+            $(voidInput).focus();
+        }
     }, spans.length * (time/spans.length) + 1000);
 }

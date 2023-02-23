@@ -21,6 +21,10 @@ body {
     overflow-y: scroll;
 }
 
+.inverted {
+    filter: invert(1) hue-rotate(180deg) !important;
+}
+
 a {
     color: inherit;
 }
@@ -132,4 +136,8 @@ h2 {
     line-height: 0;
 
     user-select: none;
+}
+
+#opt-autofadeTime {
+    width: 30px;
 }
