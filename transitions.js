@@ -4,7 +4,7 @@ var POPUP_FADE_TIME = 250;
 var currPopup = 'none';
 
 $(document).ready(function() {
-
+	// open about popup when button is clicked
 	$('.about-btn').click(function() {
 		// if already open, close it
 		if (currPopup === 'about') {
@@ -25,6 +25,7 @@ $(document).ready(function() {
 		$('.about-close-btn').focus();
 	});
 
+	// open options popup when button is clicked
 	$('.options-btn').click(function() {
 		// if already open, close it
 		if (currPopup === 'options') {
@@ -45,9 +46,17 @@ $(document).ready(function() {
 		$('.options-close-btn').focus();
 	});
 
+	// close popups when close button is clicked
 	$('.close-btn').click(function() {
 		closePopups();
-	})
+	});
+
+	// focus on void input when body is clicked except for buttons
+	$('body').click(function(e) {
+		if (!$(e.target).is('button') && currPopup === 'none') {
+			$('#voidInput').focus();
+		}
+	});
 });
 
 function closePopups() {

@@ -67,7 +67,7 @@
         </div>
 
         <div class="popup options-popup" style="display:none">
-            <span class="btn close-btn options-close-btn">x</span>
+            <span class="btn close-btn options-close-btn" tabindex="0">x</span>
             <h1 id="options-title">Options</h1>
             <label for="opt-invert">Invert Colors</label> <input type="checkbox" id="opt-invert" class="option">
             </br>
@@ -81,27 +81,19 @@
             <a class="btn options-btn" role="button" tabindex="0">options</a>
         </nav>
 
-        <!-- script to make help and options accessible for keyboard navigation -->
+        <!-- script to make buttons accessible for keyboard navigation -->
         <script>
-            // Get the help and options buttons
-            const helpButton = document.querySelector('.about-btn');
-            const optionsButton = document.querySelector('.options-btn');
-          
-            // Add a keydown event listener to each button
-            helpButton.addEventListener('keydown', function(event) {
-              // Check if the Enter key was pressed
-              if (event.key === 'Enter' || event.key === 'Space') {
-                // Call the onclick handler
-                helpButton.click();
-              }
-            });
-          
-            optionsButton.addEventListener('keydown', function(event) {
-              // Check if the Enter key was pressed
-              if (event.key === 'Enter' || event.key === 'Space') {
-                // Call the onclick handler
-                optionsButton.click();
-              }
+            // add event listener to all elements with button role
+            document.querySelectorAll('[role="button"]').forEach(item => {
+                console.log(item);
+                item.addEventListener('keydown', function(event) {
+                    console.log(event.key);
+                    // Check if the Enter key was pressed
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        // Call the onclick handler
+                        item.click();
+                    }
+                });
             });
           </script>
     </div>

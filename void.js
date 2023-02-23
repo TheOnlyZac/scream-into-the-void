@@ -19,8 +19,8 @@ $(document).ready(function() {
     document.addEventListener('keydown', function(e) {
         var key = e.key;
 
-        // ignore keypress if animation in progress or popup open
-        if (animating || currPopup != 'none') return;
+        // ignore keypress if animation in progress
+        if (animating === true) return;
 
         // reset the autofade timer
         textFadeDelay = options.getOption('autofadeTime') * 1000;
@@ -129,9 +129,7 @@ function fadeVoidText() {
         $(voidText).hide();
         $(voidInput).show();
         
-        // if there is no popup open, focus on the void input
-        if (currPopup === 'none') {
-            $(voidInput).focus();
-        }
+        // focus on the void input
+        $(voidInput).focus();
     }, spans.length * (time/spans.length) + 1000);
 }
